@@ -1,0 +1,28 @@
+:root {
+  font-family: system-ui, "Segoe UI", "Microsoft JhengHei", sans-serif;
+  color: #213547;
+  background: #f6f7f9;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+#app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+}
+button {
+  cursor: pointer;
+  border: 1px solid #d0d7de;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+}
+button:hover { border-color: #4c8bf5; }
+input {
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+.muted { color: #6b7280; font-size: 13px; }
