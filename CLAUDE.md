@@ -28,7 +28,7 @@
 
 ## Git 慣例
 
-- 走 feature branch 流程:`feature/xxx` 分支開發 → 合併回 `master`。
+- 走 feature branch 流程:在 `feature` 分支開發 → 合併回 `master`。**合併後保留 `feature` 分支**(不刪除,下次切回去繼續用)。
 - Commit 用 Conventional Commits(`feat:` / `fix:` / `refactor:` / `docs:` / `chore:`)。
 - 初始 commit 只含骨架,功能各自獨立提交(刻意保持乾淨歷史,方便面試展示)。
 
