@@ -1,4 +1,4 @@
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 // ============================================================
@@ -17,18 +17,26 @@ export const useCitiesStore = defineStore("cities", () => {
   const saved = localStorage.getItem("my-cities");
   const cities = ref(saved ? JSON.parse(saved) : ["Taipei", "Tokyo"]);
 
+  const cityCount = computed(() => cities.value.length);
+
   // action(就是個函式):新增城市
   function addCity(name) {
     const n = name.trim();
-    if (!n) return;
+    if (!n) return { message: "請輸入城市名稱", valid: false };
     // 避免重複加入同一個城市(不分大小寫)
-    if (cities.value.some((c) => c.toLowerCase() === n.toLowerCase())) return;
+    if (cities.value.some((c) => c.toLowerCase() === n.toLowerCase()))
+      return { message: "已經有這個城市了", valid: false };
     cities.value.push(n);
+    return { message: "新增成功", valid: true };
   }
 
   // action：移除城市
   function removeCity(name) {
     cities.value = cities.value.filter((c) => c !== name);
+  }
+
+  function clearAll() {
+    cities.value = [];
   }
 
   // 清單一變就存進 localStorage
@@ -41,5 +49,5 @@ export const useCitiesStore = defineStore("cities", () => {
   );
 
   // return 出去的東西,才是組件能用到的(state + actions)
-  return { cities, addCity, removeCity };
+  return { cities, cityCount, addCity, removeCity, clearAll };
 });
