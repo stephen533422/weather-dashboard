@@ -18,6 +18,9 @@
 | **TS** | 全專案導入 TypeScript(strict):tsconfig、vue-tsc、props/emit 泛型寫法、store 型別 | TypeScript、`defineProps<T>()`、`ref<T>()`、interface | ✅ 完成 |
 | **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數 / `watch` 重抓) | ✅ 完成 |
 | **C** | 收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯 | 綜合練習(composable / skeleton CSS / 衍生 computed) | ✅ 完成 |
+| **E** | three.js 雲海天空背景(官方 Sky 大氣散射 + 貼圖雲 + 霧) | Vue 生命週期管命令式庫:template ref、`onMounted`/`onUnmounted` cleanup | ✅ 完成 |
+
+> 另有加分項(非 Stage):自製 Dropdown 組件(泛型 + `defineModel` + 點外關閉)、城市名 opencc 簡轉繁、卡片玻璃透明度。
 
 ## Stage A 小練習
 
@@ -39,6 +42,13 @@
 - [x] **loading 骨架**:全域 `.skeleton`(灰底 + shimmer 流光)共用樣式,WeatherCard 與 CityDetailView 載入時顯示骨架佔位。
 - [x] **城市排序**:store 加 `sortMode` + `sortedCities`(`computed`,複製後排序不動原始清單),下拉切換、偏好存 localStorage。
 - 坑備忘:排序用 `[...cities].sort()` 複製再排,**不可**原地 `cities.sort()`(會破壞加入順序);composable 參數收 `Ref` 才保得住響應式(`toRef(props, …)`)。
+
+## Stage E 重點(已完成)
+
+- [x] **three.js 整合**:`three/sky.ts` 為純 three.js 模組,匯出 `createSky(canvas)` 回傳 `{ dispose }`;Vue 的 `SkyBackground.vue` 用 **template ref** 拿 `<canvas>`、`onMounted` 建場景、`onUnmounted` 呼叫 `dispose`(= React `useEffect` 的 cleanup)。
+- [x] **天空**:官方 `Sky`(Preetham 大氣散射),搭配 `ACESFilmicToneMapping` + `toneMappingExposure 0.5`(關鍵,否則顏色會偏)。太陽用 elevation/azimuth 設定。
+- [x] **雲**:貼圖雲平面 `InstancedMesh` + `FogExp2` 鋪出地平線景深;雲貼圖用 canvas fbm 程序生成(免外部 PNG)。
+- 坑備忘:命令式庫一定要在 `onUnmounted` 釋放(`cancelAnimationFrame`、移除 listener、`dispose()` GPU 資源);tone mapping 會壓暗 `MeshBasicMaterial` 白雲,用 `material.color` 推到 >1(HDR)補亮。
 
 ## 樣式/主題練習(規劃中,以後再做)
 
