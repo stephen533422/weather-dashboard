@@ -15,6 +15,7 @@
 | Stage | 內容 | 新概念 | 狀態 |
 |---|---|---|---|
 | **A** | Pinia store 存城市清單、卡片牆、新增/刪除、localStorage | Pinia、props、emit | ✅ 完成 |
+| **TS** | 全專案導入 TypeScript(strict):tsconfig、vue-tsc、props/emit 泛型寫法、store 型別 | TypeScript、`defineProps<T>()`、`ref<T>()`、interface | ✅ 完成 |
 | **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數) | ⏸️ 規劃完,待開始 |
 | **C** | 收尾打磨:loading 骨架、城市排序、重複/錯誤提示 | 綜合練習 | 未開始 |
 
