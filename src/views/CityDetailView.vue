@@ -7,6 +7,7 @@
 // ============================================================
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
+import { describeWeather } from "../utils/weatherCode";
 
 const route = useRoute();
 // route.params.name 型別是 string | string[],收斂成乾淨的 string
@@ -25,24 +26,6 @@ const loading = ref(true);
 const error = ref("");
 const place = ref<{ name: string; country: string } | null>(null);
 const hours = ref<HourlyRow[]>([]);
-
-// 與 WeatherCard 同一份對照表(weather_code → 圖示文字)。
-// 註:目前兩個檔各有一份,Stage C 再抽成共用。
-const codeMap: Record<number, string> = {
-  0: "☀️ 晴朗",
-  1: "🌤️ 大致晴朗",
-  2: "⛅ 局部多雲",
-  3: "☁️ 陰天",
-  45: "🌫️ 有霧",
-  48: "🌫️ 霧凇",
-  51: "🌦️ 毛毛雨",
-  61: "🌧️ 小雨",
-  63: "🌧️ 中雨",
-  65: "🌧️ 大雨",
-  71: "🌨️ 小雪",
-  80: "🌦️ 陣雨",
-  95: "⛈️ 雷雨",
-};
 
 async function load() {
   loading.value = true;
@@ -74,7 +57,7 @@ async function load() {
     hours.value = time.map((t: string, i: number) => ({
       time: t.slice(11, 16), // "2026-06-23T08:00" → "08:00"
       temp: temperature_2m[i],
-      desc: codeMap[weather_code[i]] || "🌡️ 未知",
+      desc: describeWeather(weather_code[i]),
     }));
   } catch {
     error.value = "載入失敗";
