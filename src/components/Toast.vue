@@ -1,13 +1,15 @@
-<script setup>
+<script setup lang="ts">
 // ============================================================
 // Toast：浮在畫面右下角的提示,淡入淡出。
 // 只負責「長怎樣 + 進出場動畫」;何時顯示/幾秒關掉由父層控制
 // (父層把 message 設成空字串就會自動隱藏)。
 // ============================================================
-const props = defineProps({
-  message: { type: String, required: true }, // 提示文字,空字串 = 不顯示
-  valid: { type: Boolean, required: true }, // true=成功(綠) / false=失敗(紅)
-});
+// 泛型版 defineProps:直接用 TS 型別宣告 props,不用 runtime 的 { type: ... }。
+// 對照 React：等於 function Toast({ message, valid }: { message: string; valid: boolean })
+defineProps<{
+  message: string; // 提示文字,空字串 = 不顯示
+  valid: boolean; // true=成功(綠) / false=失敗(紅)
+}>();
 </script>
 
 <template>

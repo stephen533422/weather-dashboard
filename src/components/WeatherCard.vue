@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // ============================================================
 // WeatherCard：單一城市的天氣卡片
 // 重點：defineProps（接收父層傳入的資料）、defineEmits（通知父層）
@@ -6,23 +6,36 @@
 // ============================================================
 import { ref, onMounted } from 'vue'
 
-// defineProps：宣告這個組件「對外接收哪些參數」。
-// 對照 React 的函式參數 function WeatherCard({ cityName }) { ... }
+// defineProps：用泛型直接宣告型別(取代 runtime 的 { type: String })。
+// 對照 React 的函式參數 function WeatherCard({ cityName }: { cityName: string }) {}
 // 父層用 <WeatherCard :city-name="..." /> 傳進來。
-const props = defineProps({
-  cityName: { type: String, required: true },
-})
+const props = defineProps<{
+  cityName: string
+}>()
 
-// defineEmits：宣告這個組件「會對父層發出哪些事件」。
+// defineEmits：泛型版,宣告會發出 remove 事件(無參數,用 [] 表示)。
 // 對照 React 的 callback prop：父層傳 onRemove,子層呼叫 onRemove()。
 // Vue 改成「發事件」:子層 emit('remove')，父層用 @remove="..." 接。
-const emit = defineEmits(['remove'])
+const emit = defineEmits<{
+  remove: []
+}>()
+
+// 卡片要顯示的天氣資料形狀
+interface Weather {
+  name: string
+  country: string
+  temp: number
+  humidity: number
+  desc: string
+}
 
 const loading = ref(true)
 const error = ref('')
-const data = ref(null)
+// ref<Weather | null>:還沒載入完是 null,載完才是 Weather
+const data = ref<Weather | null>(null)
 
-const codeMap = {
+// Record<number, string>:key 是 weather_code(數字)、value 是描述字串
+const codeMap: Record<number, string> = {
   0: '☀️ 晴朗', 1: '🌤️ 大致晴朗', 2: '⛅ 局部多雲', 3: '☁️ 陰天',
   45: '🌫️ 有霧', 48: '🌫️ 霧凇', 51: '🌦️ 毛毛雨', 61: '🌧️ 小雨',
   63: '🌧️ 中雨', 65: '🌧️ 大雨', 71: '🌨️ 小雪', 80: '🌦️ 陣雨', 95: '⛈️ 雷雨',
@@ -55,7 +68,7 @@ async function load() {
       humidity: w.current.relative_humidity_2m,
       desc: codeMap[w.current.weather_code] || '🌡️ 未知',
     }
-  } catch (e) {
+  } catch {
     error.value = '載入失敗'
   } finally {
     loading.value = false

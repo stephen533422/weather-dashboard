@@ -1,0 +1,22 @@
+{
+  // ============================================================
+  // TypeScript 設定(單一檔、strict 全開)
+  // 給 vue-tsc 用:type-check 與 build 前都會跑它檢查型別。
+  // ============================================================
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    // Bundler:交給 Vite/esbuild 解析模組,不用寫副檔名
+    "moduleResolution": "Bundler",
+    "strict": true, // 嚴格模式全開(noImplicitAny、strictNullChecks…)
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "noEmit": true // 只檢查型別,實際打包交給 Vite
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
+}

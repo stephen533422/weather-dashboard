@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // ============================================================
 // App：新增城市的輸入框 + 卡片牆
 // 重點：怎麼在組件裡「使用」一個 Pinia store
@@ -16,21 +16,23 @@ const newCity = ref("");
 
 // toast 狀態:message 為空字串時 Toast 自動隱藏
 const toast = reactive({ message: "", valid: true });
-let toastTimer = null; // 存住計時器,連續觸發時先清掉舊的
+// 計時器 id 的型別:setTimeout 的回傳,還沒設定時為 null
+let toastTimer: ReturnType<typeof setTimeout> | null = null;
 
-function showToast(message, valid) {
+function showToast(message: string, valid: boolean) {
   toast.message = message;
   toast.valid = valid;
   // 先清掉上一個計時器,避免前一個 toast 把這次的提早關掉
-  clearTimeout(toastTimer);
+  if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(() => {
     toast.message = "";
   }, 2500);
 }
 
 function handleAdd() {
-  const ok = store.addCity(newCity.value); // 呼叫 store 的 action,回傳成功與否
-  showToast(ok ? "已加入" : "城市已存在", ok);
+  // store 回傳 { message, valid },直接拿去顯示 toast
+  const result = store.addCity(newCity.value);
+  showToast(result.message, result.valid);
   newCity.value = "";
 }
 </script>

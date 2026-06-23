@@ -12,15 +12,23 @@ import { defineStore } from "pinia";
 // (Zustand 的 create()、或 Redux 的 slice)。
 //
 // defineStore 的第一個參數 'cities' 是這個 store 的唯一名字(像資料庫表名)。
+// addCity 的回傳:給畫面顯示的提示文字 + 成功與否。
+// 用 interface 把形狀講清楚,呼叫端(App.vue)就有型別保護。
+export interface AddCityResult {
+  message: string;
+  valid: boolean;
+}
+
 export const useCitiesStore = defineStore("cities", () => {
   // 從 localStorage 讀回上次存的城市,第一次使用就給兩個預設城市
   const saved = localStorage.getItem("my-cities");
-  const cities = ref(saved ? JSON.parse(saved) : ["Taipei", "Tokyo"]);
+  // ref<string[]>:明確標註是字串陣列(JSON.parse 回來是 any,要自己框住)
+  const cities = ref<string[]>(saved ? JSON.parse(saved) : ["Taipei", "Tokyo"]);
 
   const cityCount = computed(() => cities.value.length);
 
   // action(就是個函式):新增城市
-  function addCity(name) {
+  function addCity(name: string): AddCityResult {
     const n = name.trim();
     if (!n) return { message: "請輸入城市名稱", valid: false };
     // 避免重複加入同一個城市(不分大小寫)
@@ -31,7 +39,7 @@ export const useCitiesStore = defineStore("cities", () => {
   }
 
   // action：移除城市
-  function removeCity(name) {
+  function removeCity(name: string) {
     cities.value = cities.value.filter((c) => c !== name);
   }
 
