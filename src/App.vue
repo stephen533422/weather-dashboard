@@ -4,6 +4,7 @@
 // 重點：header 每頁固定可見;內容區交給 router-view 依路由切換。
 //       header 直接用全域 Pinia store,不必經 props 一層層傳。
 // ============================================================
+import SkyBackground from "./components/SkyBackground.vue";
 import { useCitiesStore } from "./stores/cities";
 
 // 拿到全域 store。store.cities 是響應式的,改了畫面就會更新。
@@ -12,6 +13,7 @@ const store = useCitiesStore();
 </script>
 
 <template>
+  <SkyBackground />
   <header class="app-header">
     <h1>🌤️ 多城市天氣儀表板</h1>
     <span class="count-badge">{{ store.cityCount }} 個城市</span>
