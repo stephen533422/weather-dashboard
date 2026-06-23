@@ -24,8 +24,18 @@ export const useCitiesStore = defineStore("cities", () => {
   const saved = localStorage.getItem("my-cities");
   // ref<string[]>:明確標註是字串陣列(JSON.parse 回來是 any,要自己框住)
   const cities = ref<string[]>(saved ? JSON.parse(saved) : ["Taipei", "Tokyo"]);
+  // 讀回上次的排序偏好;只接受合法值,其餘一律當預設 'added'
+  // (三元式同時把 string | null 收斂成 "added" | "name",型別才過得了)
+  const savedSort = localStorage.getItem("sort-mode");
+  const sortMode = ref<"added" | "name">(savedSort === "name" ? "name" : "added");
 
   const cityCount = computed(() => cities.value.length);
+  const sortedCities = computed(() => {
+    if (sortMode.value === "name") {
+      return [...cities.value].sort((a, b) => a.localeCompare(b));
+    }
+    return cities.value;
+  });
 
   // action(就是個函式):新增城市
   function addCity(name: string): AddCityResult {
@@ -56,6 +66,17 @@ export const useCitiesStore = defineStore("cities", () => {
     },
   );
 
+  // 排序偏好一變也存(字串不用 JSON,直接存)
+  watch(sortMode, (val) => localStorage.setItem("sort-mode", val));
+
   // return 出去的東西,才是組件能用到的(state + actions)
-  return { cities, cityCount, addCity, removeCity, clearAll };
+  return {
+    cities,
+    cityCount,
+    sortedCities,
+    sortMode,
+    addCity,
+    removeCity,
+    clearAll,
+  };
 });

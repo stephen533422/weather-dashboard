@@ -48,16 +48,20 @@ function handleAdd() {
       <button class="btn-primary" @click="handleAdd">新增城市</button>
     </div>
     <div class="status-row">
+      <select v-model="store.sortMode">
+        <option value="added">加入順序</option>
+        <option value="name">名稱 A→Z</option>
+      </select>
       <button @click="store.clearAll">清空</button>
     </div>
   </section>
 
-  <!-- 卡片牆：v-for 跑 store.cities,每個城市一張卡片 -->
+  <!-- 卡片牆：v-for 跑 store.sortedCities(排好的衍生清單),每個城市一張卡片 -->
   <!-- :city-name 把城市名傳進子組件(props) -->
   <!-- @remove 接子組件發出的事件,呼叫 store.removeCity 把它刪掉 -->
   <div v-if="store.cities.length" class="grid">
     <WeatherCard
-      v-for="name in store.cities"
+      v-for="name in store.sortedCities"
       :key="name"
       :city-name="name"
       @remove="store.removeCity(name)"
