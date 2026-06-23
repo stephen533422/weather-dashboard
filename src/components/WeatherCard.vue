@@ -29,7 +29,17 @@ const emit = defineEmits<{
       ✕
     </button>
 
-    <p v-if="loading" class="muted">載入中…</p>
+    <div v-if="loading" class="skel-card">
+      <div class="skeleton" style="width: 60%; height: 18px"></div>
+      <div
+        class="skeleton"
+        style="width: 40%; height: 40px; margin-top: 10px"
+      ></div>
+      <div
+        class="skeleton"
+        style="width: 80%; height: 14px; margin-top: 10px"
+      ></div>
+    </div>
     <p v-else-if="error" class="error">⚠️ {{ error }}（{{ cityName }}）</p>
     <div v-else-if="data">
       <h3 class="city">

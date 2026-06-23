@@ -79,7 +79,10 @@ watch(city, load, { immediate: true });
     <span v-if="place" class="muted">{{ place.country }}</span>
   </h2>
 
-  <p v-if="loading" class="muted">載入中…</p>
+  <!-- 載入中:放幾條長條 skeleton,形狀比照下面的 hour-row -->
+  <ul v-if="loading" class="hours">
+    <li v-for="n in 6" :key="n" class="skeleton skel-row"></li>
+  </ul>
   <p v-else-if="error" class="error">⚠️ {{ error }}（{{ city }}）</p>
 
   <!-- 逐時清單:v-for 跑組好的 hours,每小時一列 -->
@@ -139,6 +142,11 @@ watch(city, load, { immediate: true });
 .hour-temp {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+/* skeleton 長條:高度比照 hour-row(padding 10*2 + 內容約 22) */
+.skel-row {
+  height: 44px;
+  border-radius: var(--radius);
 }
 .error {
   color: #d33;
