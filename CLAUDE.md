@@ -25,7 +25,8 @@
 - ✅ **Stage A** 完成:Pinia store(城市清單 + localStorage)、卡片牆、props/emit、新增/刪除。Stage A 小練習已全部完成。
 - ✅ **樣式美化**:抽出 CSS 變數 token、天氣感漸層背景、玻璃卡片、Toast 提示(Teleport + Transition)。
 - ✅ **TS 化** 完成:全專案導入 TypeScript(strict),`.vue` 用 `<script setup lang="ts">`、props/emit 改泛型寫法、store 加型別。`npm run type-check` 把關。
-- ⏸️ **Stage B**(Vue Router,點卡片進詳細頁)規劃好但尚未開始。
+- ✅ **Stage B** 完成:導入 Vue Router。`App.vue` 拆成版面外殼 + `<router-view />`、首頁移到 `views/HomeView.vue`、卡片 `router-link` 進 `/city/:name` 詳細頁、`CityDetailView` 用 `useRoute()` 讀參數並抓 `hourly` 逐時(用 `watch(immediate)` 因應組件重用)。
+- ⏸️ **Stage C**(收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯)規劃中。
 - 小練習與完整 Stage 表見 ROADMAP.md。
 
 ## Git 慣例

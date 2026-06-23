@@ -16,14 +16,22 @@
 |---|---|---|---|
 | **A** | Pinia store 存城市清單、卡片牆、新增/刪除、localStorage | Pinia、props、emit | ✅ 完成 |
 | **TS** | 全專案導入 TypeScript(strict):tsconfig、vue-tsc、props/emit 泛型寫法、store 型別 | TypeScript、`defineProps<T>()`、`ref<T>()`、interface | ✅ 完成 |
-| **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數) | ⏸️ 規劃完,待開始 |
-| **C** | 收尾打磨:loading 骨架、城市排序、重複/錯誤提示 | 綜合練習 | 未開始 |
+| **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數 / `watch` 重抓) | ✅ 完成 |
+| **C** | 收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯 | 綜合練習 | ⏸️ 規劃中 |
 
 ## Stage A 小練習
 
 - [x] **顯示城市數量**:在 store 加一個 `cityCount` 的 `computed` 並 return,標題旁顯示「目前 N 個城市」。(重點:體會 store 也能放 computed)
 - [x] **清空全部**:store 加一個 `clearAll()` action,畫面加一顆「清空」按鈕。
 - [x] **(挑戰)重複城市提示**:`addCity` 回傳 `true/false`,畫面依結果顯示「已加入」或「城市已存在」提示。
+
+## Stage B 重點(已完成)
+
+- [x] **拆頁**:`App.vue` 瘦成版面外殼(header + `<router-view />`),首頁內容搬到 `views/HomeView.vue`。
+- [x] **路由表**:`router/index.ts` 定義 `/` 與 `/city/:name`(`createWebHistory`)。
+- [x] **卡片導頁**:`WeatherCard` 用 `router-link` 進詳細頁;刪除鈕 `@click.stop.prevent` 避免誤觸,並中和 `<a>` 預設樣式。
+- [x] **詳細頁**:`CityDetailView` 用 `useRoute()` 讀參數、抓 Open-Meteo `hourly` 顯示逐時。
+- 坑備忘:Router 會**重用組件**,切換城市要用 `watch(city, …, { immediate: true })` 重抓(`onMounted` 只跑一次)。
 
 ## 樣式/主題練習(規劃中,以後再做)
 
