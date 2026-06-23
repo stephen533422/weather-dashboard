@@ -15,14 +15,23 @@
 | Stage | 內容 | 新概念 | 狀態 |
 |---|---|---|---|
 | **A** | Pinia store 存城市清單、卡片牆、新增/刪除、localStorage | Pinia、props、emit | ✅ 完成 |
+| **TS** | 全專案導入 TypeScript(strict):tsconfig、vue-tsc、props/emit 泛型寫法、store 型別 | TypeScript、`defineProps<T>()`、`ref<T>()`、interface | ✅ 完成 |
 | **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數) | ⏸️ 規劃完,待開始 |
 | **C** | 收尾打磨:loading 骨架、城市排序、重複/錯誤提示 | 綜合練習 | 未開始 |
 
-## Stage A 小練習(目前進行中)
+## Stage A 小練習
 
-- [ ] **顯示城市數量**:在 store 加一個 `cityCount` 的 `computed` 並 return,標題旁顯示「目前 N 個城市」。(重點:體會 store 也能放 computed)
-- [ ] **清空全部**:store 加一個 `clearAll()` action,畫面加一顆「清空」按鈕。
-- [ ] **(挑戰)重複城市提示**:`addCity` 回傳 `true/false`,畫面依結果顯示「已加入」或「城市已存在」提示。
+- [x] **顯示城市數量**:在 store 加一個 `cityCount` 的 `computed` 並 return,標題旁顯示「目前 N 個城市」。(重點:體會 store 也能放 computed)
+- [x] **清空全部**:store 加一個 `clearAll()` action,畫面加一顆「清空」按鈕。
+- [x] **(挑戰)重複城市提示**:`addCity` 回傳 `true/false`,畫面依結果顯示「已加入」或「城市已存在」提示。
+
+## 樣式/主題練習(規劃中,以後再做)
+
+> 背景:已把設計集中成一套 CSS 變數 token(`style.css` 的 `:root`),組件只「消費」這些 token。
+
+- [ ] **深色模式**:在 `style.css` 加 `@media (prefers-color-scheme: dark)`,只覆寫 `:root` 裡那幾個 `--` 變數(`--text` / `--surface` / 背景漸層等),**組件一行都不改**就整個變深色。
+  - 重點:親身驗證「token 抽對了」—— 換主題只動字典,不動句子。
+  - 進階:改成可手動切換(按鈕 toggle `data-theme="dark"`,用屬性選擇器覆寫變數),這時就需要狀態,可以放進 Pinia store。
 
 ### 心法備忘
 - Pinia setup store = 一段「可以被很多組件共用的 `<script setup>`」,裡面就是 `ref` / `computed` / `function`。

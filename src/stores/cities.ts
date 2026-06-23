@@ -1,4 +1,4 @@
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 // ============================================================
@@ -12,23 +12,39 @@ import { defineStore } from "pinia";
 // (Zustand 的 create()、或 Redux 的 slice)。
 //
 // defineStore 的第一個參數 'cities' 是這個 store 的唯一名字(像資料庫表名)。
+// addCity 的回傳:給畫面顯示的提示文字 + 成功與否。
+// 用 interface 把形狀講清楚,呼叫端(App.vue)就有型別保護。
+export interface AddCityResult {
+  message: string;
+  valid: boolean;
+}
+
 export const useCitiesStore = defineStore("cities", () => {
   // 從 localStorage 讀回上次存的城市,第一次使用就給兩個預設城市
   const saved = localStorage.getItem("my-cities");
-  const cities = ref(saved ? JSON.parse(saved) : ["Taipei", "Tokyo"]);
+  // ref<string[]>:明確標註是字串陣列(JSON.parse 回來是 any,要自己框住)
+  const cities = ref<string[]>(saved ? JSON.parse(saved) : ["Taipei", "Tokyo"]);
+
+  const cityCount = computed(() => cities.value.length);
 
   // action(就是個函式):新增城市
-  function addCity(name) {
+  function addCity(name: string): AddCityResult {
     const n = name.trim();
-    if (!n) return;
+    if (!n) return { message: "請輸入城市名稱", valid: false };
     // 避免重複加入同一個城市(不分大小寫)
-    if (cities.value.some((c) => c.toLowerCase() === n.toLowerCase())) return;
+    if (cities.value.some((c) => c.toLowerCase() === n.toLowerCase()))
+      return { message: "已經有這個城市了", valid: false };
     cities.value.push(n);
+    return { message: "新增成功", valid: true };
   }
 
   // action：移除城市
-  function removeCity(name) {
+  function removeCity(name: string) {
     cities.value = cities.value.filter((c) => c !== name);
+  }
+
+  function clearAll() {
+    cities.value = [];
   }
 
   // 清單一變就存進 localStorage
@@ -41,5 +57,5 @@ export const useCitiesStore = defineStore("cities", () => {
   );
 
   // return 出去的東西,才是組件能用到的(state + actions)
-  return { cities, addCity, removeCity };
+  return { cities, cityCount, addCity, removeCity, clearAll };
 });
