@@ -17,7 +17,7 @@
 | **A** | Pinia store 存城市清單、卡片牆、新增/刪除、localStorage | Pinia、props、emit | ✅ 完成 |
 | **TS** | 全專案導入 TypeScript(strict):tsconfig、vue-tsc、props/emit 泛型寫法、store 型別 | TypeScript、`defineProps<T>()`、`ref<T>()`、interface | ✅ 完成 |
 | **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數 / `watch` 重抓) | ✅ 完成 |
-| **C** | 收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯 | 綜合練習 | ⏸️ 規劃中 |
+| **C** | 收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯 | 綜合練習(composable / skeleton CSS / 衍生 computed) | ✅ 完成 |
 
 ## Stage A 小練習
 
@@ -32,6 +32,13 @@
 - [x] **卡片導頁**:`WeatherCard` 用 `router-link` 進詳細頁;刪除鈕 `@click.stop.prevent` 避免誤觸,並中和 `<a>` 預設樣式。
 - [x] **詳細頁**:`CityDetailView` 用 `useRoute()` 讀參數、抓 Open-Meteo `hourly` 顯示逐時。
 - 坑備忘:Router 會**重用組件**,切換城市要用 `watch(city, …, { immediate: true })` 重抓(`onMounted` 只跑一次)。
+
+## Stage C 重點(已完成)
+
+- [x] **抽共用**:`weather_code` 對照表抽成 `utils/weatherCode`(`describeWeather`);抓天氣邏輯抽成 composable `composables/useCityWeather`(= React custom hook),WeatherCard 只剩畫面。
+- [x] **loading 骨架**:全域 `.skeleton`(灰底 + shimmer 流光)共用樣式,WeatherCard 與 CityDetailView 載入時顯示骨架佔位。
+- [x] **城市排序**:store 加 `sortMode` + `sortedCities`(`computed`,複製後排序不動原始清單),下拉切換、偏好存 localStorage。
+- 坑備忘:排序用 `[...cities].sort()` 複製再排,**不可**原地 `cities.sort()`(會破壞加入順序);composable 參數收 `Ref` 才保得住響應式(`toRef(props, …)`)。
 
 ## 樣式/主題練習(規劃中,以後再做)
 

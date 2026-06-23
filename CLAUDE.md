@@ -26,7 +26,7 @@
 - ✅ **樣式美化**:抽出 CSS 變數 token、天氣感漸層背景、玻璃卡片、Toast 提示(Teleport + Transition)。
 - ✅ **TS 化** 完成:全專案導入 TypeScript(strict),`.vue` 用 `<script setup lang="ts">`、props/emit 改泛型寫法、store 加型別。`npm run type-check` 把關。
 - ✅ **Stage B** 完成:導入 Vue Router。`App.vue` 拆成版面外殼 + `<router-view />`、首頁移到 `views/HomeView.vue`、卡片 `router-link` 進 `/city/:name` 詳細頁、`CityDetailView` 用 `useRoute()` 讀參數並抓 `hourly` 逐時(用 `watch(immediate)` 因應組件重用)。
-- ⏸️ **Stage C**(收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯)規劃中。
+- ✅ **Stage C** 完成:抽出 `utils/weatherCode` 與 composable `composables/useCityWeather`(= custom hook)、loading skeleton(全域 `.skeleton` + shimmer)、城市排序(`sortMode`/`sortedCities` computed,偏好存 localStorage)。
 - 小練習與完整 Stage 表見 ROADMAP.md。
 
 ## Git 慣例
