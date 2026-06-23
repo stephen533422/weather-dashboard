@@ -8,6 +8,7 @@
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { describeWeather } from "../utils/weatherCode";
+import { toTW } from "../utils/zh";
 
 const route = useRoute();
 // route.params.name 型別是 string | string[],收斂成乾淨的 string
@@ -45,7 +46,8 @@ async function load() {
       return;
     }
     const found = geo.results[0];
-    place.value = { name: found.name, country: found.country };
+    // API 回傳是簡體,顯示前轉繁體
+    place.value = { name: toTW(found.name), country: toTW(found.country) };
 
     // 第二段:改抓逐時(hourly)。回來的是並排陣列,用同一個 index 對齊。
     const wRes = await fetch(
@@ -74,8 +76,9 @@ watch(city, load, { immediate: true });
 <template>
   <router-link class="back" to="/">← 返回</router-link>
 
+  <!-- 標題顯示 geocoding 回來的在地名稱(中文),載入中先用網址參數頂著 -->
   <h2 class="title">
-    {{ city }}
+    {{ place ? place.name : "" }}
     <span v-if="place" class="muted">{{ place.country }}</span>
   </h2>
 

@@ -2,6 +2,7 @@
 // 這是 composable(= React custom hook):把抓資料邏輯收進來,組件只管畫面。
 import { ref, watch, type Ref } from "vue";
 import { describeWeather } from "../utils/weatherCode";
+import { toTW } from "../utils/zh";
 
 // 卡片要顯示的天氣資料形狀
 interface Weather {
@@ -38,8 +39,9 @@ export function useCityWeather(city: Ref<string>) {
       );
       const w = await wRes.json();
       data.value = {
-        name: place.name,
-        country: place.country,
+        // API 回傳是簡體,顯示前轉繁體
+        name: toTW(place.name),
+        country: toTW(place.country),
         temp: w.current.temperature_2m,
         humidity: w.current.relative_humidity_2m,
         desc: describeWeather(w.current.weather_code),
