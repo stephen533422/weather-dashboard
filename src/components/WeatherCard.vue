@@ -72,35 +72,70 @@ onMounted(load)
     <button class="remove" @click="emit('remove')" title="移除">✕</button>
 
     <p v-if="loading" class="muted">載入中…</p>
-    <p v-else-if="error" style="color: #d33;">⚠️ {{ error }}（{{ cityName }}）</p>
+    <p v-else-if="error" class="error">⚠️ {{ error }}（{{ cityName }}）</p>
     <div v-else-if="data">
-      <h3 style="margin: 0;">{{ data.name }} <span class="muted">{{ data.country }}</span></h3>
-      <p style="font-size: 36px; margin: 8px 0;">{{ data.temp }}°C</p>
-      <p style="margin: 0;">{{ data.desc }}</p>
-      <p class="muted" style="margin: 4px 0 0;">濕度 {{ data.humidity }}%</p>
+      <h3 class="city">
+        {{ data.name }} <span class="muted">{{ data.country }}</span>
+      </h3>
+      <p class="temp">{{ data.temp }}°C</p>
+      <p class="desc">{{ data.desc }}</p>
+      <p class="muted humidity">濕度 {{ data.humidity }}%</p>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* 玻璃卡:半透明白 + 模糊,漂在漸層天空上 */
 .card {
   position: relative;
-  background: #fff;
-  border: 1px solid #e3e8ee;
-  border-radius: 12px;
+  background: var(--surface);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
   padding: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+.city {
+  margin: 0;
+  font-size: 17px;
+}
+.temp {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 6px 0 2px;
+  letter-spacing: -1px;
+}
+.desc {
+  margin: 0;
+  font-size: 15px;
+}
+.humidity {
+  margin: 6px 0 0;
+}
+.error {
+  color: #d33;
+  margin: 0;
 }
 .remove {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   border: none;
   background: transparent;
   font-size: 14px;
-  color: #9aa3af;
+  color: var(--text-muted);
   padding: 4px 8px;
+  font-weight: 400;
 }
 .remove:hover {
   color: #d33;
+  border-color: transparent;
+  background: transparent;
 }
 </style>

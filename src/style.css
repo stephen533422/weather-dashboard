@@ -1,28 +1,80 @@
 :root {
   font-family: system-ui, "Segoe UI", "Microsoft JhengHei", sans-serif;
-  color: #213547;
-  background: #f6f7f9;
+
+  /* ============================================================
+     設計 token：顏色 / 圓角 / 陰影都集中在這裡。
+     之後想換色或調風格,只改這一段就好,不用翻每個組件。
+     對照 React：你大概會用 CSS variables 或一個 theme 物件。
+     ============================================================ */
+  --text: #1e2a3a;
+  --text-muted: #5b6b80;
+  --accent: #2f6fed;
+  --accent-hover: #1b56c9;
+
+  /* 卡片用半透明白 + 模糊,做出漂在天空上的玻璃感 */
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-solid: rgba(255, 255, 255, 0.85);
+  --surface-border: rgba(255, 255, 255, 0.65);
+
+  --radius: 16px;
+  --shadow: 0 8px 24px rgba(31, 58, 102, 0.12);
+  --shadow-hover: 0 14px 32px rgba(31, 58, 102, 0.2);
+
+  color: var(--text);
 }
+
 * { box-sizing: border-box; }
-body { margin: 0; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  /* 天氣感漸層:上方天空藍 → 下方淡藍白,固定不隨捲動 */
+  background: linear-gradient(180deg, #6fb1e6 0%, #a6cdee 32%, #e9f3fc 100%);
+  background-attachment: fixed;
+}
+
 #app {
   max-width: 720px;
   margin: 0 auto;
-  padding: 24px 16px 64px;
+  padding: 32px 16px 64px;
 }
+
+/* 預設按鈕:白玻璃次要按鈕(例如「清空」) */
 button {
   cursor: pointer;
-  border: 1px solid #d0d7de;
-  background: #fff;
-  border-radius: 8px;
-  padding: 8px 14px;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-solid);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 9px 16px;
   font-size: 14px;
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
 }
-button:hover { border-color: #4c8bf5; }
+button:hover { border-color: var(--accent); }
+button:active { transform: translateY(1px); }
+
+/* 主要按鈕:實心藍(例如「新增城市」) */
+button.btn-primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #fff;
+}
+button.btn-primary:hover { background: var(--accent-hover); }
+
 input {
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 8px 12px;
+  border: 1px solid var(--surface-border);
+  background: var(--surface-solid);
+  border-radius: 10px;
+  padding: 10px 14px;
   font-size: 14px;
+  color: var(--text);
 }
-.muted { color: #6b7280; font-size: 13px; }
+input::placeholder { color: var(--text-muted); }
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.18);
+}
+
+.muted { color: var(--text-muted); font-size: 13px; }
