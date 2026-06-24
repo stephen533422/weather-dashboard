@@ -6,6 +6,7 @@
 // ============================================================
 import { ref, onMounted, onUnmounted } from "vue";
 import { useCitySearch } from "../composables/useCitySearch";
+import { toTW } from "../utils/zh";
 
 // 選中城市時通知父層(父層拿去 store.addCity)
 const emit = defineEmits<{
@@ -66,9 +67,9 @@ onUnmounted(() => {
           class="option"
           @click="choose(p.name)"
         >
-          <span class="name">{{ p.name }}</span>
+          <span class="name">{{ toTW(p.name) }}</span>
           <span class="muted">
-            {{ p.admin1 ? p.admin1 + ", " : "" }}{{ p.country }}
+            {{ p.admin1 ? toTW(p.admin1) + ", " : "" }}{{ toTW(p.country) }}
           </span>
         </li>
       </template>

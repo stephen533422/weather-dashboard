@@ -1,11 +1,11 @@
 import { ref, watch, type Ref } from "vue";
-import { toTW } from "../utils/zh"; // 候選城市名也簡轉繁
 
+// 全部存 API 原始名(簡體);顯示時才在畫面 toTW。
 export interface Place {
   id: number;
   name: string;
   country: string;
-  admin1?: string; // 一級行政區,API 可能沒有 → 可選
+  admin1?: string;
 }
 
 export function useCitySearch(query: Ref<string>) {
@@ -40,9 +40,9 @@ export function useCitySearch(query: Ref<string>) {
         const data = await res.json();
         results.value = (data.results ?? []).map((r: any) => ({
           id: r.id,
-          name: toTW(r.name),
-          country: toTW(r.country),
-          admin1: r.admin1 ? toTW(r.admin1) : undefined,
+          name: r.name,
+          country: r.country,
+          admin1: r.admin1,
         }));
       } catch (e) {
         // 被 abort 的請求會丟 AbortError,那是正常的,忽略它
