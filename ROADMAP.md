@@ -21,7 +21,14 @@
 | **D** | 城市搜尋自動完成(打字即時候選清單) | debounce(防抖)+ 競態處理(AbortController) | ✅ 完成 |
 | **E** | three.js 雲海天空背景(官方 Sky 大氣散射 + 貼圖雲 + 霧) | Vue 生命週期管命令式庫:template ref、`onMounted`/`onUnmounted` cleanup | ✅ 完成 |
 
-> 另有加分項(非 Stage):自製 Dropdown 組件(泛型 + `defineModel` + 點外關閉)、城市名 opencc 簡轉繁、卡片玻璃透明度。
+> 另有加分項(非 Stage):自製 Dropdown 組件(泛型 + `defineModel` + 點外關閉)、城市名 opencc 簡轉繁、卡片玻璃透明度、emoji SVG favicon + RWD 微調。
+
+## 詳細頁強化(已完成)
+
+- [x] **一次抓齊**:forecast API 同時要 `current`(目前)+ `daily`(7 天)+ `hourly`(逐時);`timezone=auto`、`forecast_days=7`,逐時只取今天 24 小時。
+- [x] **版面**:目前天氣卡(大溫度 + 體感/濕度/風速/降雨/日出日落數據格)→ 今日逐時(橫向滾動卡列)→ 未來幾天(玻璃橫條列)。
+- [x] **逐時互動**:橫向滾動,滑鼠用 pointer 事件自訂拖曳 + 慣性(`pointerType !== 'mouse'` 時交給原生觸控捲動);隱藏捲軸符合玻璃風。
+- [x] **loading 骨架**比照各區塊版型,共用 `.hour` 的 `min-height` 確保載入前後同高不跳版。
 
 ## Stage A 小練習
 
