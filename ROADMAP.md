@@ -18,6 +18,7 @@
 | **TS** | 全專案導入 TypeScript(strict):tsconfig、vue-tsc、props/emit 泛型寫法、store 型別 | TypeScript、`defineProps<T>()`、`ref<T>()`、interface | ✅ 完成 |
 | **B** | 點卡片 → 城市詳細頁(逐時預報),可返回 | Vue Router(router-link / router-view / 路由參數 / `watch` 重抓) | ✅ 完成 |
 | **C** | 收尾打磨:loading 骨架、城市排序、抽出共用 `codeMap`/抓資料邏輯 | 綜合練習(composable / skeleton CSS / 衍生 computed) | ✅ 完成 |
+| **D** | 城市搜尋自動完成(打字即時候選清單) | debounce(防抖)+ 競態處理(AbortController) | ✅ 完成 |
 | **E** | three.js 雲海天空背景(官方 Sky 大氣散射 + 貼圖雲 + 霧) | Vue 生命週期管命令式庫:template ref、`onMounted`/`onUnmounted` cleanup | ✅ 完成 |
 
 > 另有加分項(非 Stage):自製 Dropdown 組件(泛型 + `defineModel` + 點外關閉)、城市名 opencc 簡轉繁、卡片玻璃透明度。
@@ -42,6 +43,12 @@
 - [x] **loading 骨架**:全域 `.skeleton`(灰底 + shimmer 流光)共用樣式,WeatherCard 與 CityDetailView 載入時顯示骨架佔位。
 - [x] **城市排序**:store 加 `sortMode` + `sortedCities`(`computed`,複製後排序不動原始清單),下拉切換、偏好存 localStorage。
 - 坑備忘:排序用 `[...cities].sort()` 複製再排,**不可**原地 `cities.sort()`(會破壞加入順序);composable 參數收 `Ref` 才保得住響應式(`toRef(props, …)`)。
+
+## Stage D 重點(已完成)
+
+- [x] **debounce**:`useCitySearch` 用 `clearTimeout` + `setTimeout(…, 300)`,打字停頓才查(= React `useEffect` 裡 setTimeout + cleanup)。
+- [x] **競態處理**:用 `AbortController`,新查詢進來先 `abort()` 舊的;`catch` 吞掉 `AbortError`;`finally` 用 `if (!signal.aborted)` 才動 `loading`,避免被取消的舊請求把 loading 關掉而閃爍。
+- [x] **組件**:`CitySearch.vue`(輸入框 + 候選浮層,選中 `emit('select')`、點外/Esc 關),HomeView 改用它取代手打輸入框 + 新增鈕。
 
 ## Stage E 重點(已完成)
 

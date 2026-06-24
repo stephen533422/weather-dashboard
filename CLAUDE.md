@@ -27,6 +27,7 @@
 - ✅ **TS 化** 完成:全專案導入 TypeScript(strict),`.vue` 用 `<script setup lang="ts">`、props/emit 改泛型寫法、store 加型別。`npm run type-check` 把關。
 - ✅ **Stage B** 完成:導入 Vue Router。`App.vue` 拆成版面外殼 + `<router-view />`、首頁移到 `views/HomeView.vue`、卡片 `router-link` 進 `/city/:name` 詳細頁、`CityDetailView` 用 `useRoute()` 讀參數並抓 `hourly` 逐時(用 `watch(immediate)` 因應組件重用)。
 - ✅ **Stage C** 完成:抽出 `utils/weatherCode` 與 composable `composables/useCityWeather`(= custom hook)、loading skeleton(全域 `.skeleton` + shimmer)、城市排序(`sortMode`/`sortedCities` computed,偏好存 localStorage)。
+- ✅ **Stage D** 完成:城市搜尋自動完成。`composables/useCitySearch`(debounce + `AbortController` 競態處理)抓即時候選、`components/CitySearch.vue`(候選浮層 + `emit('select')` + 點外/Esc 關),HomeView 改用 autocomplete 取代手打輸入框。
 - ✅ **Stage E** 完成:three.js 雲海天空背景。`three/sky.ts`(純 three.js,官方 `Sky` 大氣散射 + ACES tone mapping + 貼圖雲 `InstancedMesh` + 霧)、`SkyBackground.vue` 用 template ref + `onMounted`/`onUnmounted` 管理建立與釋放。
 - ✅ **加分項**:自製 `Dropdown`(泛型 + `defineModel` + 點外關閉)取代原生 select、城市名 `opencc-js` 簡轉繁(`utils/zh`)、卡片玻璃透明度微調。
 - 小練習與完整 Stage 表見 ROADMAP.md。
