@@ -25,7 +25,12 @@
 - ✅ **Stage A** 完成:Pinia store(城市清單 + localStorage)、卡片牆、props/emit、新增/刪除。Stage A 小練習已全部完成。
 - ✅ **樣式美化**:抽出 CSS 變數 token、天氣感漸層背景、玻璃卡片、Toast 提示(Teleport + Transition)。
 - ✅ **TS 化** 完成:全專案導入 TypeScript(strict),`.vue` 用 `<script setup lang="ts">`、props/emit 改泛型寫法、store 加型別。`npm run type-check` 把關。
-- ⏸️ **Stage B**(Vue Router,點卡片進詳細頁)規劃好但尚未開始。
+- ✅ **Stage B** 完成:導入 Vue Router。`App.vue` 拆成版面外殼 + `<router-view />`、首頁移到 `views/HomeView.vue`、卡片 `router-link` 進 `/city/:name` 詳細頁、`CityDetailView` 用 `useRoute()` 讀參數並抓 `hourly` 逐時(用 `watch(immediate)` 因應組件重用)。
+- ✅ **Stage C** 完成:抽出 `utils/weatherCode` 與 composable `composables/useCityWeather`(= custom hook)、loading skeleton(全域 `.skeleton` + shimmer)、城市排序(`sortMode`/`sortedCities` computed,偏好存 localStorage)。
+- ✅ **Stage D** 完成:城市搜尋自動完成。`composables/useCitySearch`(debounce + `AbortController` 競態處理)抓即時候選、`components/CitySearch.vue`(候選浮層 + `emit('select')` + 點外/Esc 關),HomeView 改用 autocomplete 取代手打輸入框。
+- ✅ **Stage E** 完成:three.js 雲海天空背景。`three/sky.ts`(純 three.js,官方 `Sky` 大氣散射 + ACES tone mapping + 貼圖雲 `InstancedMesh` + 霧)、`SkyBackground.vue` 用 template ref + `onMounted`/`onUnmounted` 管理建立與釋放。
+- ✅ **加分項**:自製 `Dropdown`(泛型 + `defineModel` + 點外關閉)取代原生 select、城市名 `opencc-js` 簡轉繁(`utils/zh`)、卡片玻璃透明度微調、emoji SVG favicon、RWD 微調。
+- ✅ **詳細頁強化**:`CityDetailView` 一次抓 `current` + `daily`(7 天)+ `hourly`,呈現「目前天氣卡 → 今日逐時(橫向卡列,滑鼠拖曳 + 慣性、觸控走原生)→ 未來幾天橫條列」;loading 骨架比照版型、`.hour` 用 `min-height` 防跳版。
 - 小練習與完整 Stage 表見 ROADMAP.md。
 
 ## Git 慣例
