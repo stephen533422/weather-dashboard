@@ -40,6 +40,11 @@ body {
   margin: 0 auto;
   padding: 32px 16px 64px;
 }
+@media (max-width: 480px) {
+  #app {
+    padding: 20px 14px 48px;
+  }
+}
 
 /* 預設按鈕:白玻璃次要按鈕(例如「清空」) */
 button {

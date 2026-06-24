@@ -15,7 +15,7 @@ const store = useCitiesStore();
 <template>
   <SkyBackground />
   <header class="app-header">
-    <h1>🌤️ 多城市天氣儀表板</h1>
+    <h1>🌤️ 天氣儀表板</h1>
     <span class="count-badge">{{ store.cityCount }} 個城市</span>
   </header>
   <router-view />
@@ -25,7 +25,8 @@ const store = useCitiesStore();
 .app-header {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 6px 10px;
 }
 h1 {
   font-size: 26px;

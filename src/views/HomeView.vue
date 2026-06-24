@@ -80,9 +80,6 @@ function handleSelect(name: string) {
   margin-bottom: 8px;
   align-items: center;
 }
-.add-row input {
-  flex: 1;
-}
 /* 提示文字靠左、清空鈕推到最右 */
 .status-row button {
   margin-left: auto;
