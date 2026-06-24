@@ -8,12 +8,11 @@ import { useCitiesStore } from "../stores/cities";
 import WeatherCard from "../components/WeatherCard.vue";
 import Toast from "../components/Toast.vue";
 import Dropdown from "../components/Dropdown.vue";
+import CitySearch from "../components/CitySearch.vue";
 
 // 拿到全域 store。store.cities 是響應式的,改了畫面就會更新。
 // 對照 React：const { cities, addCity, removeCity } = useCitiesStore()
 const store = useCitiesStore();
-
-const newCity = ref("");
 
 // 排序選項。值的型別要正好是 "added" | "name",Dropdown 的泛型 T 才能對上 store.sortMode
 const sortOptions: { value: "added" | "name"; label: string }[] = [
@@ -36,23 +35,17 @@ function showToast(message: string, valid: boolean) {
   }, 2500);
 }
 
-function handleAdd() {
+function handleSelect(name: string) {
   // store 回傳 { message, valid },直接拿去顯示 toast
-  const result = store.addCity(newCity.value);
+  const result = store.addCity(name);
   showToast(result.message, result.valid);
-  newCity.value = "";
 }
 </script>
 
 <template>
   <section class="toolbar">
     <div class="add-row">
-      <input
-        v-model="newCity"
-        placeholder="輸入城市,例如 London / Kaohsiung"
-        @keyup.enter="handleAdd"
-      />
-      <button class="btn-primary" @click="handleAdd">新增城市</button>
+      <CitySearch @select="handleSelect" />
     </div>
     <div class="status-row">
       <Dropdown v-model="store.sortMode" :options="sortOptions" />
